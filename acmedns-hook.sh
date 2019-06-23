@@ -43,10 +43,10 @@ deploy_challenge() {
 
     #_log "curl -s -X POST -H "$hdr_user" -H "$hdr_key" -d "$data" $ACMEDNS_UPDATE_URL"
     #exit 1
-    response=$(curl -s -X POST -H "$hdr_user" -H "$hdr_key" -d "$data" $ACMEDNS_UPDATE_URL)
+    response=$(curl -Ss -X POST -H "$hdr_user" -H "$hdr_key" -d "$data" $ACMEDNS_UPDATE_URL 2>&1)
     #_log "$response"
     if ! echo "$response" | grep "\"$TOKEN_VALUE\"" >/dev/null; then
-      _error "invalid response from acme-dns"
+      _error "invalid response from acme-dns: \"$response\""
     fi
   done
 }
