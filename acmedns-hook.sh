@@ -41,9 +41,9 @@ deploy_challenge() {
     hdr_key="X-Api-Key: $_ACMEDNS_PASSWORD"
     data="{\"subdomain\":\"$_ACMEDNS_SUBDOMAIN\", \"txt\": \"$TOKEN_VALUE\"}"
 
-    #_log "curl -s -X POST -H "$hdr_user" -H "$hdr_key" -d "$data" $ACMEDNS_UPDATE_URL"
+    #_log "curl ${CURL_OPTS:-} -Ss -X POST -H "$hdr_user" -H "$hdr_key" -d "$data" $ACMEDNS_UPDATE_URL"
     #exit 1
-    response=$(curl -Ss -X POST -H "$hdr_user" -H "$hdr_key" -d "$data" $ACMEDNS_UPDATE_URL 2>&1)
+    response=$(curl ${CURL_OPTS:-} -Ss -X POST -H "$hdr_user" -H "$hdr_key" -d "$data" $ACMEDNS_UPDATE_URL 2>&1)
     #_log "$response"
     if ! echo "$response" | grep "\"$TOKEN_VALUE\"" >/dev/null; then
       _error "invalid response from acme-dns: \"$response\""
