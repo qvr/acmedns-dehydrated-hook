@@ -22,13 +22,13 @@ deploy_challenge() {
       DOMAIN="${DOMAIN:2}"
     fi
 
-    if [[ -v ACMEDNS_USERNAME[@] ]] && [[ "${ACMEDNS_USERNAME["$DOMAIN"]+isset}" ]]; then
+    if [[ "${ACMEDNS_USERNAME["$DOMAIN"]+isset}" ]]; then
       _ACMEDNS_USERNAME=${ACMEDNS_USERNAME["$DOMAIN"]}
     fi
-    if [[ -v ACMEDNS_PASSWORD[@] ]] && [[ "${ACMEDNS_PASSWORD["$DOMAIN"]+isset}" ]]; then
+    if [[ "${ACMEDNS_PASSWORD["$DOMAIN"]+isset}" ]]; then
       _ACMEDNS_PASSWORD=${ACMEDNS_PASSWORD["$DOMAIN"]}
     fi
-    if [[ -v ACMEDNS_SUBDOMAIN[@] ]] && [[ "${ACMEDNS_SUBDOMAIN["$DOMAIN"]+isset}" ]]; then
+    if [[ "${ACMEDNS_SUBDOMAIN["$DOMAIN"]+isset}" ]]; then
       _ACMEDNS_SUBDOMAIN=${ACMEDNS_SUBDOMAIN["$DOMAIN"]}
     fi
 
