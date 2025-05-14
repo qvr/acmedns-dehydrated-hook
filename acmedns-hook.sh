@@ -37,13 +37,11 @@ deploy_challenge() {
     [[ -n "${_ACMEDNS_PASSWORD:=${ACMEDNS_PASSWORD_DEFAULT:-}}" ]]   || _error "No ACMEDNS_PASSWORD for $DOMAIN and no default set"
     [[ -n "${_ACMEDNS_SUBDOMAIN:=${ACMEDNS_SUBDOMAIN_DEFAULT:-}}" ]] || _error "No ACMEDNS_SUBDOMAIN for $DOMAIN and no default set"
 
-    hdr_user="X-Api-User: $_ACMEDNS_USERNAME"
-    hdr_key="X-Api-Key: $_ACMEDNS_PASSWORD"
+    hdr_user="-H \"X-Api-User: $_ACMEDNS_USERNAME\""
+    hdr_key="-H \"X-Api-Key: $_ACMEDNS_PASSWORD\""
     data="{\"subdomain\":\"$_ACMEDNS_SUBDOMAIN\", \"txt\": \"$TOKEN_VALUE\"}"
 
-    #_log "curl ${CURL_OPTS:-} -Ss -X POST -H "$hdr_user" -H "$hdr_key" -d "$data" $ACMEDNS_UPDATE_URL"
-    #exit 1
-    response=$(curl ${CURL_OPTS:-} -Ss -X POST -H "$hdr_user" -H "$hdr_key" -d "$data" $ACMEDNS_UPDATE_URL 2>&1)
+    response=$(curl ${CURL_OPTS:-} -Ss -X POST -K <(echo -e "$hdr_user\n$hdr_key") -d "$data" "$ACMEDNS_UPDATE_URL" 2>&1)
     #_log "$response"
     if ! echo "$response" | grep "\"$TOKEN_VALUE\"" >/dev/null; then
       _error "invalid response from acme-dns: \"$response\""
