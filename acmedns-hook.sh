@@ -51,15 +51,14 @@ deploy_challenge() {
 
 HANDLER="$1"; shift
 if [[ "${HANDLER}" =~ ^(deploy_challenge)$ ]]; then
+  declare -A ACMEDNS_USERNAME
+  declare -A ACMEDNS_PASSWORD
+  declare -A ACMEDNS_SUBDOMAIN
   if [[ -f "${CONFIG}" ]]; then
     . "${CONFIG}"
-    if [[ -n "${ACMEDNS_CONFIG:-}" ]] && [[ -f "${ACMEDNS_CONFIG}" ]]; then
-      # external config only to avoid declaring arrays in main config file
-      declare -A ACMEDNS_USERNAME
-      declare -A ACMEDNS_PASSWORD
-      declare -A ACMEDNS_SUBDOMAIN
-      . "${ACMEDNS_CONFIG}"
-    fi
+  fi
+  if [[ -n "${ACMEDNS_CONFIG:-}" ]]; then
+    . "${ACMEDNS_CONFIG}"
   fi
   "$HANDLER" "$@"
 fi
