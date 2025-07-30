@@ -54,7 +54,7 @@ if [[ "${HANDLER}" =~ ^(deploy_challenge)$ ]]; then
   declare -A ACMEDNS_USERNAME
   declare -A ACMEDNS_PASSWORD
   declare -A ACMEDNS_SUBDOMAIN
-  if [[ -f "${CONFIG}" ]]; then
+  if [[ -n "${CONFIG}" ]]; then
     . "${CONFIG}"
   fi
   if [[ -n "${ACMEDNS_CONFIG:-}" ]]; then
